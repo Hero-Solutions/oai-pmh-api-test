@@ -9,7 +9,7 @@ Sample code is found inside ```src/Command/TestCommand.php```. Configuration of 
 ## Requirements
 
 - PHP >= 7.2.5
-- Symfony >= 2.0
+- Composer >= 2.0
 
 ## Installation
 
