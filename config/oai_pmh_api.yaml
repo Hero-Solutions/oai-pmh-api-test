@@ -6,9 +6,10 @@ parameters:
     languages:
       - nl
       - en
+    max_records: 5
 
   datahub_fields:
     object_number: 'descriptiveMetadata/objectIdentificationWrap/repositoryWrap/repositorySet/workID[@type="object-number"]'
-    title: 'descriptiveMetadata/objectIdentificationWrap/titleWrap/titleSet/appellationValue[@pref="preferred" and @xml:lang="{language}"]'
-    creator: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/nameActorSet/appellationValue[@pref="preferred"]'
-    creator_role: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/roleActor/term'
+    title:         'descriptiveMetadata/objectIdentificationWrap/titleWrap/titleSet/appellationValue[@pref="preferred" and @xml:lang="{language}"]'
+    creator:       'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/nameActorSet/appellationValue[@pref="preferred"]'
+    creator_role:  'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/roleActor/term'

@@ -32,15 +32,19 @@ class TestCommand extends Command
 
         $datahubFields = $this->params->get('datahub_fields');
         $languages = $oaiPmhApi['languages'];
+        $maxRecords = $oaiPmhApi['max_records'];
 
         try {
             $oaiPmhEndpoint = Endpoint::build($oaiPmhApi['url']);
             $allRecords = $oaiPmhEndpoint->listRecords($oaiPmhApi['metadata_prefix']);
+
             foreach($languages as $language) {
                 echo 'Language ' . $language . ':' . PHP_EOL;
                 $i = 0;
+
                 foreach($allRecords as $record) {
                     $data = $record->metadata->children($this->namespace, true);
+
                     foreach ($datahubFields as $key => $xpathRaw) {
                         $xpath = $this->buildXpath($xpathRaw, $language);
                         $res = $data->xpath($xpath);
@@ -52,9 +56,9 @@ class TestCommand extends Command
                     }
                     echo PHP_EOL;
 
-                    // Break after 5 records, we don't need all 8000 records for testing
+                    // Break after X records
                     $i++;
-                    if($i == 5) {
+                    if($i == $maxRecords) {
                         echo PHP_EOL;
                         break;
                     }
@@ -67,9 +71,10 @@ class TestCommand extends Command
         return 0;
     }
 
-    // Build the xpath based on the provided namespace (there are probably cleaner solutions)
+    // Builds an xpath-expression based on the provided namespace (there are probably cleaner solutions)
     private function buildXpath($xpath, $language)
     {
+        // We use {language} as a placeholder for the language in which we want to have our data
         $xpath = str_replace('{language}', $language, $xpath);
 
         $xpath = str_replace('[@', '[@' . $this->namespace . ':', $xpath);
