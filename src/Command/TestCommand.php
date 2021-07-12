@@ -33,16 +33,18 @@ class TestCommand extends Command
         $datahubFields = $this->params->get('datahub_fields');
         $languages = $oaiPmhApi['languages'];
         $maxRecords = $oaiPmhApi['max_records'];
+        $recordData = array();
 
         try {
             $oaiPmhEndpoint = Endpoint::build($oaiPmhApi['url']);
             $allRecords = $oaiPmhEndpoint->listRecords($oaiPmhApi['metadata_prefix']);
 
             foreach($languages as $language) {
-                echo 'Language ' . $language . ':' . PHP_EOL;
+//                echo 'Language ' . $language . ':' . PHP_EOL;
                 $i = 0;
 
                 foreach($allRecords as $record) {
+                    $arr = array();
                     $data = $record->metadata->children($this->namespace, true);
 
                     foreach ($datahubFields as $key => $xpathRaw) {
@@ -50,16 +52,25 @@ class TestCommand extends Command
                         $res = $data->xpath($xpath);
                         if ($res) {
                             foreach ($res as $resChild) {
-                                echo $key . ': ' . $resChild . PHP_EOL;
+                                $str = (string)$resChild;
+                                if($key == 'thumbnail') {
+                                    $arr[] = $str;
+                                    $str .= '/full/500,/0/default.jpg';
+                                }
+                                $arr[] = $str;
+//                                echo $key . ': ' . $resChild . PHP_EOL;
                             }
                         }
                     }
-                    echo PHP_EOL;
+                    if(!empty($arr)) {
+                        $recordData[] = $arr;
+                    }
+//                    echo PHP_EOL;
 
                     // Break after X records
                     $i++;
-                    if($i == $maxRecords) {
-                        echo PHP_EOL;
+                    if($maxRecords > 0 && $i == $maxRecords) {
+//                        echo PHP_EOL;
                         break;
                     }
                 }
@@ -67,6 +78,16 @@ class TestCommand extends Command
         } catch (Exception $e) {
             echo $e . PHP_EOL;
         }
+//        var_dump($recordData);
+        $fp = fopen('manifests.csv', 'w');
+        fputcsv($fp, array('inventarisnummer', 'iiif_manifest', 'image', 'thumbnail'));
+
+// Loop through file pointer and a line
+        foreach ($recordData as $fields) {
+            fputcsv($fp, $fields);
+        }
+
+        fclose($fp);
 
         return 0;
     }
