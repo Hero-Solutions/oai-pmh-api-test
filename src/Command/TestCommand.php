@@ -40,9 +40,10 @@ class TestCommand extends Command
                 echo $name  . ': ' . $field['record'] . PHP_EOL;
                 $record = $oaiPmhEndpoint->getRecord($oaiPmhApi['id_prefix'] . $field['record'], $oaiPmhApi['metadata_prefix']);
                 $data = $record->GetRecord->record->metadata->children($this->namespace, true);
-                echo $field['xpath'] . PHP_EOL;
+                echo 'XPath without namespace:  ' . $field['xpath'] . PHP_EOL;
                 $xpath = $this->buildXPath($field['xpath'], $this->namespace);
-                echo $xpath . PHP_EOL;
+                echo 'XPath with namespace:     ' . $xpath . PHP_EOL;
+                echo 'Data:' . PHP_EOL;
                 $res = $data->xpath($xpath);
                 if ($res) {
                     foreach ($res as $resChild) {
