@@ -31,63 +31,32 @@ class TestCommand extends Command
         $this->namespace = $oaiPmhApi['namespace'];
 
         $datahubFields = $this->params->get('datahub_fields');
-        $languages = $oaiPmhApi['languages'];
-        $maxRecords = $oaiPmhApi['max_records'];
-        $recordData = array();
 
+        $lastExpression = null;
         try {
             $oaiPmhEndpoint = Endpoint::build($oaiPmhApi['url']);
-            $allRecords = $oaiPmhEndpoint->listRecords($oaiPmhApi['metadata_prefix']);
-
-            foreach($languages as $language) {
-//                echo 'Language ' . $language . ':' . PHP_EOL;
-                $i = 0;
-
-                foreach($allRecords as $record) {
-                    $arr = array();
-                    $data = $record->metadata->children($this->namespace, true);
-
-                    foreach ($datahubFields as $key => $xpathRaw) {
-                        $xpath = $this->buildXpath($xpathRaw, 'lido');
-                        $res = $data->xpath($xpath);
-                        if ($res) {
-                            foreach ($res as $resChild) {
-                                $str = (string)$resChild;
-                                if($key == 'thumbnail') {
-                                    $arr[] = $str;
-                                    $str .= '/full/500,/0/default.jpg';
-                                }
-                                $arr[] = $str;
-//                                echo $key . ': ' . $resChild . PHP_EOL;
-                            }
-                        }
-                    }
-                    if(!empty($arr)) {
-                        $recordData[] = $arr;
-                    }
-//                    echo PHP_EOL;
-
-                    // Break after X records
-                    $i++;
-                    if($maxRecords > 0 && $i == $maxRecords) {
-//                        echo PHP_EOL;
-                        break;
+            foreach ($datahubFields as $name => $field) {
+                $lastExpression = $field['xpath'];
+                echo $name  . ': ' . $field['record'] . PHP_EOL;
+                $record = $oaiPmhEndpoint->getRecord($oaiPmhApi['id_prefix'] . $field['record'], $oaiPmhApi['metadata_prefix']);
+                $data = $record->GetRecord->record->metadata->children($this->namespace, true);
+                echo $field['xpath'] . PHP_EOL;
+                $xpath = $this->buildXPath($field['xpath'], $this->namespace);
+                echo $xpath . PHP_EOL;
+                $res = $data->xpath($xpath);
+                if ($res) {
+                    foreach ($res as $resChild) {
+                        $str = (string)$resChild;
+                        echo '    ' . $str . PHP_EOL;
                     }
                 }
+                echo PHP_EOL;
             }
-        } catch (Exception $e) {
+        } catch(Exception $e) {
+            echo PHP_EOL;
+            echo $lastExpression . PHP_EOL;
             echo $e . PHP_EOL;
         }
-//        var_dump($recordData);
-        $fp = fopen('manifests.csv', 'w');
-        fputcsv($fp, array('inventarisnummer', 'iiif_manifest', 'image', 'thumbnail'));
-
-// Loop through file pointer and a line
-        foreach ($recordData as $fields) {
-            fputcsv($fp, $fields);
-        }
-
-        fclose($fp);
 
         return 0;
     }
