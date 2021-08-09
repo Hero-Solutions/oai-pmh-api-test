@@ -28,13 +28,10 @@ parameters:
       xpath: 'descriptiveMetadata/objectIdentificationWrap/titleWrap/titleSet/appellationValue[@pref="preferred" and @xml:lang="en"]'
       record: qe0xj0
     Periode:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName/term'
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[not(conceptID)]/term'
       record: qe0xj0
     Materiaal en techniek:
       xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/displayMaterialsTech'
-      record: 56ebdb
-    Techniek:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/materialsTech/termMaterialsTech[@type="technique" and conceptID[@source="TMS"]]/term[@pref="preferred"]'
       record: 56ebdb
     Afmetingen label:
       xpath: '(descriptiveMetadata/objectIdentificationWrap/objectMeasurementsWrap/objectMeasurementsSet/displayObjectMeasurements)[1]'
@@ -50,16 +47,16 @@ parameters:
       record: 7wyjiw
     Tekstwaarden (marketingtekst/highlights in het Nederlands):
       xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="highlights"]/descriptiveNoteValue[@xml:lang="nl"]'
-      record: 7wyjiw
+      record: vdwcw1
     Tekstwaarden (marketingtekst/highlights in het Engels):
       xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="highlights"]/descriptiveNoteValue[@xml:lang="en"]'
-      record: 7wyjiw
+      record: vdwcw1
     Tekstwaarden (literatuur in het Nederlands):
       xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="literature"]/descriptiveNoteValue[@xml:lang="nl"]'
-      record: 7wyjiw
+      record: vdwcw1
     Tekstwaarden (technical notes in het Nederlands):
       xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="technical-notes"]/descriptiveNoteValue[@xml:lang="nl"]'
-      record: 7wyjiw
+      record: vdwcw1
     Rubriek:
       xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="object-category"]/term[@pref="preferred"]'
       record: pt07rz
@@ -94,7 +91,7 @@ parameters:
       xpath: 'descriptiveMetadata/objectRelationWrap/relatedWorksWrap/relatedWorkSet[relatedWorkRelType/term[not(@pref)]="achterzijde van"]/relatedWork/object/objectID[@type="oai"]'
       record: u48ubw
     Objectnaam:
-      xpath: 'descriptiveMetadata/objectClassificationWrap/objectWorkTypeWrap/objectWorkType[conceptID[@source="TMS"]]/term[@pref="preferred"]'
+      xpath: 'descriptiveMetadata/objectClassificationWrap/objectWorkTypeWrap/objectWorkType[@type="form" and conceptID[@source="TMS"]]/term[@pref="preferred"]'
       record: vwb1fg
     Paginanummer (in schetsboek):
       xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="page-number"]/descriptiveNoteValue'
@@ -105,3 +102,24 @@ parameters:
     Schenkers en erflaters:
       xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="acquisition"]/eventDescriptionSet/descriptiveNoteValue'
       record: usf1vq
+    IIIF manifest URL:
+      xpath: 'administrativeMetadata/resourceWrap/resourceSet[resourceType/term="IIIF Manifest"]/resourceID[@source="ImagehubKMSKA"]'
+      record: 'qe0xj0'
+    Thesaurus AAT - Facet Abstracte begrippen:
+      xpath: 'descriptiveMetadata/objectRelationWrap/subjectWrap/subjectSet/subject[@type="associated-concept"]/subjectConcept[conceptID[@source="AAT"]]/term[@pref="preferred"]'
+      record: 72g30u
+    Thesaurus AAT - Facet Stijlen en perioden:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[conceptID[@source="AAT"]]/term[@pref="preferred"]'
+      record: kqdpko
+    Thesaurus AAT - Facet Actoren en Organismen:
+      xpath: 'descriptiveMetadata/objectRelationWrap/subjectWrap/subjectSet/subject[@type="agent"]/subjectConcept[conceptID[@source="AAT"]]/term[@pref="preferred"]'
+      record: ipk5f6
+    Thesaurus AAT - Facet Activiteiten:
+      xpath: 'descriptiveMetadata/objectRelationWrap/subjectWrap/subjectSet/subject[@type="activity"]/subjectConcept[conceptID[@source="AAT"]]/term[@pref="preferred"]'
+      record: vifynp
+    Thesaurus AAT - Facet Materialen:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/materialsTech/termMaterialsTech[conceptID[@source="AAT"]]/term[@pref="preferred"]'
+      record: ipk5f6
+    Thesaurus AAT - Facet Objecten:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/objectWorkTypeWrap/objectWorkType[conceptID[@source="AAT"]]/term[@pref="preferred"]'
+      record: vifynp

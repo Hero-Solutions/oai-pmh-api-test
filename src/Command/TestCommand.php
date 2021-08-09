@@ -48,7 +48,7 @@ class TestCommand extends Command
                     $data = $record->metadata->children($this->namespace, true);
 
                     foreach ($datahubFields as $key => $xpathRaw) {
-                        $xpath = $this->buildXpath($xpathRaw, $language);
+                        $xpath = $this->buildXpath($xpathRaw, 'lido');
                         $res = $data->xpath($xpath);
                         if ($res) {
                             foreach ($res as $resChild) {
@@ -93,19 +93,23 @@ class TestCommand extends Command
     }
 
     // Builds an xpath-expression based on the provided namespace (there are probably cleaner solutions)
-    private function buildXpath($xpath, $language)
+    private function buildXPath($xpath, $namespace)
     {
-        // We use {language} as a placeholder for the language in which we want to have our data
-        $xpath = str_replace('{language}', $language, $xpath);
-
-        $xpath = str_replace('[@', '[@' . $this->namespace . ':', $xpath);
-        $xpath = str_replace('[@' . $this->namespace . ':xml:', '[@xml:', $xpath);
-        $xpath = preg_replace('/\[([^@])/', '[' . $this->namespace . ':${1}', $xpath);
-        $xpath = preg_replace('/\/([^\/])/', '/' . $this->namespace . ':${1}', $xpath);
+        $prepend = '';
+        if(strpos($xpath, '(') === 0) {
+            $prepend = '(';
+            $xpath = substr($xpath, 1);
+        }
+        $xpath = preg_replace('/\[@(?!xml)/', '[@' . $namespace . ':${1}', $xpath);
+        $xpath = preg_replace('/\(@(?!xml)/', '(@' . $namespace . ':${1}', $xpath);
+        $xpath = preg_replace('/\[(?![@0-9]|not\()/', '[' . $namespace . ':${1}', $xpath);
+        $xpath = preg_replace('/\/([^\/])/', '/' . $namespace . ':${1}', $xpath);
+        $xpath = preg_replace('/ and (?!@xml)/', ' and ' . $namespace . ':${1}', $xpath);
         if(strpos($xpath, '/') !== 0) {
-            $xpath = $this->namespace . ':' . $xpath;
+            $xpath = $namespace . ':' . $xpath;
         }
         $xpath = 'descendant::' . $xpath;
+        $xpath = $prepend . $xpath;
         return $xpath;
     }
 }
