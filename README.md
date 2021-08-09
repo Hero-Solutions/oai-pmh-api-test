@@ -30,4 +30,4 @@ You can run the test application through the following command:
 php bin/console app:test
 ```
 
-This will output the metadata of the first 5 records.
+This will output the XPath expressions with and without lido namespace, along with the ID of the test records and the metadata found for each test record according to the given XPath-expression in the config file.
