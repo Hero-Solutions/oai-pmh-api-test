@@ -42,7 +42,7 @@ class TestCommand extends Command
                 $data = $record->GetRecord->record->metadata->children($this->namespace, true);
                 echo 'XPath without namespace:  ' . $field['xpath'] . PHP_EOL;
                 $xpath = $this->buildXPath($field['xpath'], $this->namespace);
-                echo 'XPath with namespace:     ' . $xpath . PHP_EOL;
+                echo 'XPath with namespace:     ' . str_replace('descendant::', '', $xpath) . PHP_EOL;
                 echo 'Data:' . PHP_EOL;
                 $res = $data->xpath($xpath);
                 if ($res) {
@@ -70,9 +70,9 @@ class TestCommand extends Command
             $prepend = '(';
             $xpath = substr($xpath, 1);
         }
-        $xpath = preg_replace('/\[@(?!xml)/', '[@' . $namespace . ':${1}', $xpath);
-        $xpath = preg_replace('/\(@(?!xml)/', '(@' . $namespace . ':${1}', $xpath);
-        $xpath = preg_replace('/\[(?![@0-9]|not\()/', '[' . $namespace . ':${1}', $xpath);
+        $xpath = preg_replace('/\[@(?!xml|text)/', '[@' . $namespace . ':${1}', $xpath);
+        $xpath = preg_replace('/\(@(?!xml|text)/', '(@' . $namespace . ':${1}', $xpath);
+        $xpath = preg_replace('/\[(?![@0-9]|not\(|text)/', '[' . $namespace . ':${1}', $xpath);
         $xpath = preg_replace('/\/([^\/])/', '/' . $namespace . ':${1}', $xpath);
         $xpath = preg_replace('/ and (?!@xml)/', ' and ' . $namespace . ':${1}', $xpath);
         if(strpos($xpath, '/') !== 0) {

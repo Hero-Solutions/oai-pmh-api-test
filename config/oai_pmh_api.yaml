@@ -6,6 +6,12 @@ parameters:
     id_prefix: 'oai:datahub.kmska.be:kmska.be:'
 
   datahub_fields:
+    Highlights:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification/term[text()="highlights"]'
+      record: 61unsj
+    Collectiepresentatie:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification/term[text()="collection presentation"]'
+      record: 61unsj
     Inventarisnummer:
       xpath: 'descriptiveMetadata/objectIdentificationWrap/repositoryWrap/repositorySet/workID[@type="object-number"]'
       record: qkn57w
@@ -13,10 +19,10 @@ parameters:
       xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/nameActorSet/appellationValue[@pref="preferred"]'
       record: vvqzxv
     Rol vervaardiger:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/roleActor/term'
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/roleActor/term[@xml:lang="nl"]'
       record: vvqzxv
     Qualifier vervaardiger (school van, kopie naar, ...):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/attributionQualifierActor'
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/attributionQualifierActor[@xml:lang="nl"]'
       record: cxm7c4
     Datumlabel:
       xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventDate/displayDate'
@@ -28,19 +34,19 @@ parameters:
       xpath: 'descriptiveMetadata/objectIdentificationWrap/titleWrap/titleSet/appellationValue[@pref="preferred" and @xml:lang="en"]'
       record: qe0xj0
     Periode:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[not(conceptID)]/term'
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[not(conceptID)]/term[@xml:lang="nl"]'
       record: qe0xj0
     Materiaal en techniek:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/displayMaterialsTech'
-      record: 56ebdb
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/displayMaterialsTech[@xml:lang="nl"]'
+      record: qe0xj0
     Afmetingen label:
       xpath: '(descriptiveMetadata/objectIdentificationWrap/objectMeasurementsWrap/objectMeasurementsSet/displayObjectMeasurements)[1]'
       record: 9uk0e5
     Inscripties:
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/inscriptionsWrap/inscriptions/inscriptionDescription[not(@type)]/descriptiveNoteValue'
+      xpath: 'descriptiveMetadata/objectIdentificationWrap/inscriptionsWrap/inscriptions/inscriptionDescription[not(@type)]/descriptiveNoteValue[@xml:lang="nl"]'
       record: lx1els
     Standplaats:
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/repositoryWrap/repositorySet/repositoryLocation/namePlaceSet/appellationValue'
+      xpath: 'descriptiveMetadata/objectIdentificationWrap/repositoryWrap/repositorySet/repositoryLocation/namePlaceSet/appellationValue[@xml:lang="nl"]'
       record: xvrh2n
     Tekstwaarden (nota in het Nederlands):
       xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="note"]/descriptiveNoteValue[@xml:lang="nl"]'
@@ -58,10 +64,10 @@ parameters:
       xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="technical-notes"]/descriptiveNoteValue[@xml:lang="nl"]'
       record: vdwcw1
     Rubriek:
-      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="object-category"]/term[@pref="preferred"]'
+      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="object-category"]/term[@pref="preferred" and @xml:lang="nl"]'
       record: pt07rz
     Verwervingsgeschiedenis:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="provenance"]/eventDescriptionSet/descriptiveNoteValue'
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="provenance"]/eventDescriptionSet/descriptiveNoteValue[@xml:lang="nl"]'
       record: aqey9u
     Thesaurus (Iconclass id):
       xpath: 'descriptiveMetadata/objectRelationWrap/subjectWrap/subjectSet/subject/subjectConcept[conceptID[@source="Iconclass"]]/conceptID'
@@ -97,10 +103,10 @@ parameters:
       xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="page-number"]/descriptiveNoteValue'
       record: u48ubw
     Met dank aan:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="restoration"]/eventDescriptionSet/descriptiveNoteValue'
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="restoration"]/eventDescriptionSet/descriptiveNoteValue[@xml:lang="nl"]'
       record: 10l5gd
     Schenkers en erflaters:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="acquisition"]/eventDescriptionSet/descriptiveNoteValue'
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="acquisition"]/eventDescriptionSet/descriptiveNoteValue[@xml:lang="nl"]'
       record: usf1vq
     IIIF manifest URL:
       xpath: 'administrativeMetadata/resourceWrap/resourceSet[resourceType/term="IIIF Manifest"]/resourceID[@source="ImagehubKMSKA"]'
