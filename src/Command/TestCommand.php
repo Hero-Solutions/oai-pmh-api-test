@@ -54,7 +54,11 @@ class TestCommand extends Command
             $i = 0;
 
             foreach($allRecords as $record) {
-                $arr = array();
+                $id = strip_tags($record->header->identifier->asXML());
+                $arr = array(
+                    'id' => $id,
+                    'url' => $oaiPmhApi['url'] . '?verb=GetRecord&metadataPrefix=' . $oaiPmhApi['metadata_prefix'] . '&identifier=' . $id
+                );
                 $data = $record->metadata->children($this->namespace, true);
 
                 foreach ($datahubFields as $key => $xpathRaw) {

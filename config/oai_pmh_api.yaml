@@ -6,7 +6,7 @@ parameters:
     id_prefix: 'oai:datahub.vlaamsekunstcollectie.be:mskgent.be:'
     set: 'institution:museum_voor_schone_kunsten_gent'
 
-    max_records: 100
+    max_records: 25
 
   datahub_fields:
     object_number: 'descriptiveMetadata/objectIdentificationWrap/repositoryWrap/repositorySet/workID[@type="object-number"]'
