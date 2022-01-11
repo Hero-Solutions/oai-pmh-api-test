@@ -3,7 +3,9 @@
 namespace App\Command;
 
 use \Exception;
+use Phpoaipmh\Client;
 use Phpoaipmh\Endpoint;
+use Phpoaipmh\HttpAdapter\CurlAdapter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,33 +33,61 @@ class TestCommand extends Command
         $this->namespace = $oaiPmhApi['namespace'];
 
         $datahubFields = $this->params->get('datahub_fields');
+        $overrideCertificateAuthorityFile = $this->params->get('override_certificate_authority');
+        $sslCertificateAuthorityFile = $this->params->get('ssl_certificate_authority_file');
 
-        $lastExpression = null;
+        $maxRecords = $oaiPmhApi['max_records'];
+        $recordData = array();
+
         try {
-            $oaiPmhEndpoint = Endpoint::build($oaiPmhApi['url']);
-            foreach ($datahubFields as $name => $field) {
-                $lastExpression = $field['xpath'];
-                echo $name  . ': ' . $field['record'] . PHP_EOL;
-                $record = $oaiPmhEndpoint->getRecord($oaiPmhApi['id_prefix'] . $field['record'], $oaiPmhApi['metadata_prefix']);
-                $data = $record->GetRecord->record->metadata->children($this->namespace, true);
-                echo 'XPath without namespace:  ' . $field['xpath'] . PHP_EOL;
-                $xpath = $this->buildXPath($field['xpath'], $this->namespace);
-                echo 'XPath with namespace:     ' . str_replace('descendant::', '', $xpath) . PHP_EOL;
-                echo 'Data:' . PHP_EOL;
-                $res = $data->xpath($xpath);
-                if ($res) {
-                    foreach ($res as $resChild) {
-                        $str = (string)$resChild;
-                        echo '    ' . $str . PHP_EOL;
+            $curlAdapter = new CurlAdapter();
+            if ($overrideCertificateAuthorityFile) {
+                $curlOpts[CURLOPT_CAINFO] = $sslCertificateAuthorityFile;
+                $curlOpts[CURLOPT_CAPATH] = $sslCertificateAuthorityFile;
+            }
+            $curlAdapter->setCurlOpts($curlOpts);
+            $oaiPmhClient = new Client($oaiPmhApi['url'], $curlAdapter);
+            $oaiPmhEndpoint = new Endpoint($oaiPmhClient);
+
+            $allRecords = $oaiPmhEndpoint->listRecords($oaiPmhApi['metadata_prefix'], null, null, $oaiPmhApi['set']);
+
+            $i = 0;
+
+            foreach($allRecords as $record) {
+                $arr = array();
+                $data = $record->metadata->children($this->namespace, true);
+
+                foreach ($datahubFields as $key => $xpathRaw) {
+                    $xpath = $this->buildXpath($xpathRaw, 'lido');
+                    $res = $data->xpath($xpath);
+                    if ($res) {
+                        foreach ($res as $resChild) {
+                            $str = (string)$resChild;
+                            if($key == 'thumbnail') {
+                                $arr['image'] = $str;
+                                $str .= '/full/500,/0/default.jpg';
+                            }
+                            $arr[$key] = $str;
+//                                echo $key . ': ' . $resChild . PHP_EOL;
+                        }
                     }
                 }
-                echo PHP_EOL;
+                if(!empty($arr)) {
+                    $recordData[] = $arr;
+                }
+//                    echo PHP_EOL;
+
+                // Break after X records
+                $i++;
+                if($maxRecords > 0 && $i == $maxRecords) {
+//                        echo PHP_EOL;
+                    break;
+                }
             }
-        } catch(Exception $e) {
-            echo PHP_EOL;
-            echo $lastExpression . PHP_EOL;
+        } catch (Exception $e) {
             echo $e . PHP_EOL;
         }
+        var_dump($recordData);
 
         return 0;
     }
