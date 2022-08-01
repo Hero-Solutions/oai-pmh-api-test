@@ -3,7 +3,9 @@
 namespace App\Command;
 
 use \Exception;
+use Phpoaipmh\Client;
 use Phpoaipmh\Endpoint;
+use Phpoaipmh\HttpAdapter\CurlAdapter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,10 +33,20 @@ class TestCommand extends Command
         $this->namespace = $oaiPmhApi['namespace'];
 
         $datahubFields = $this->params->get('datahub_fields');
+        $overrideCertificateAuthorityFile = $this->params->get('override_certificate_authority');
+        $sslCertificateAuthorityFile = $this->params->get('ssl_certificate_authority_file');
 
         $lastExpression = null;
         try {
-            $oaiPmhEndpoint = Endpoint::build($oaiPmhApi['url']);
+            $curlAdapter = new CurlAdapter();
+            if ($overrideCertificateAuthorityFile) {
+                $curlOpts[CURLOPT_CAINFO] = $sslCertificateAuthorityFile;
+                $curlOpts[CURLOPT_CAPATH] = $sslCertificateAuthorityFile;
+            }
+            $curlAdapter->setCurlOpts($curlOpts);
+            $oaiPmhClient = new Client($oaiPmhApi['url'], $curlAdapter);
+            $oaiPmhEndpoint = new Endpoint($oaiPmhClient);
+
             foreach ($datahubFields as $name => $field) {
                 $lastExpression = $field['xpath'];
                 echo $name  . ': ' . $field['record'] . PHP_EOL;
@@ -73,8 +85,10 @@ class TestCommand extends Command
         $xpath = preg_replace('/\[@(?!xml|text)/', '[@' . $namespace . ':${1}', $xpath);
         $xpath = preg_replace('/\(@(?!xml|text)/', '(@' . $namespace . ':${1}', $xpath);
         $xpath = preg_replace('/\[(?![@0-9]|not\(|text)/', '[' . $namespace . ':${1}', $xpath);
-        $xpath = preg_replace('/\/([^\/])/', '/' . $namespace . ':${1}', $xpath);
-        $xpath = preg_replace('/ and (?!@xml)/', ' and ' . $namespace . ':${1}', $xpath);
+        $xpath = preg_replace('/\/@/', '/@' . $namespace . ':', $xpath);
+        $xpath = preg_replace('/\/([^@\/])/', '/' . $namespace . ':${1}', $xpath);
+        $xpath = preg_replace('/ and @(?!xml)/', ' and @' . $namespace . ':${1}', $xpath);
+        $xpath = preg_replace('/ and (?!@|@xml)/', ' and ' . $namespace . ':${1}', $xpath);
         if(strpos($xpath, '/') !== 0) {
             $xpath = $namespace . ':' . $xpath;
         }

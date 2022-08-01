@@ -1,185 +1,195 @@
 parameters:
   oai_pmh_api:
-    url: 'http://datahub.kmska.be/oai'
+    url: 'https://datahub.mskgent.be/oai'
     metadata_prefix: 'oai_lido'
     namespace: 'lido'
-    id_prefix: 'oai:datahub.kmska.be:kmska.be:'
+    id_prefix: 'oai:datahub.mskgent.be:mskgent.be:'
 
   datahub_fields:
-    IIIF manifest URL:
-      xpath: 'administrativeMetadata/resourceWrap/resourceSet[resourceType/term="IIIF Manifest"]/resourceID[@source="ImagehubKMSKA"]'
-      record: 'qe0xj0'
-    Inventarisnummer:
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/repositoryWrap/repositorySet/workID[@type="object-number"]'
-      record: qkn57w
-    Vervaardiger:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/nameActorSet/appellationValue[@pref="preferred"]'
-      record: vvqzxv
-    Rol vervaardiger (Nederlands):
+    Instellingsnaam NL:
+      xpath: 'descriptiveMetadata/objectIdentificationWrap/repositoryWrap/repositorySet[not(@type)]/repositoryName/legalBodyName/appellationValue[@xml:lang="nl"]'
+      record: S-46
+    Afdeling NL:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="department"]/term'
+      record: S-46
+    Collectie NL:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="collection"]/term[@xml:lang="nl"]'
+      record: S-46
+    Collectie FR:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="collection"]/term[@xml:lang="fr"]'
+      record: S-46
+    Collectie EN:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="collection"]/term[@xml:lang="en"]'
+      record: S-46
+    Collectie externe bron:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="collection"]/conceptID[@source="AAT"]'
+      record: S-46
+    Huidige standplaats NL:
+      xpath: 'descriptiveMetadata/objectIdentificationWrap/repositoryWrap/repositorySet[not(@type)]/repositoryLocation/namePlaceSet/appellationValue'
+      record: S-66
+    Naam vervaardiger NL:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/nameActorSet/appellationValue[@pref="preferred" and @xml:lang="nl"]'
+      record: 1909-OO
+    Rol vervaardiger NL:
       xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/roleActor/term[@xml:lang="nl"]'
-      record: vvqzxv
-    Rol vervaardiger (Engels):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/roleActor/term[@xml:lang="en"]'
-      record: vvqzxv
-    Rol vervaardiger (Frans):
+      record: 1909-OO
+    Rol vervaardiger FR:
       xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/roleActor/term[@xml:lang="fr"]'
-      record: vvqzxv
-    Qualifier vervaardiger (school van, ...) (Nederlands):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/attributionQualifierActor[@xml:lang="nl"]'
-      record: cxm7c4
-    Qualifier vervaardiger (school van, ...) (Engels):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/attributionQualifierActor[@xml:lang="en"]'
-      record: cxm7c4
-    Qualifier vervaardiger (school van, ...) (Frans):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/attributionQualifierActor[@xml:lang="fr"]'
-      record: cxm7c4
-    Datumlabel:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventDate/displayDate'
-      record: gkg4gi
-    Titel (Nederlands):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/titleWrap/titleSet/appellationValue[@pref="preferred" and @xml:lang="nl"]'
-      record: qe0xj0
-    Titel (Engels):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/titleWrap/titleSet/appellationValue[@pref="preferred" and @xml:lang="en"]'
-      record: qe0xj0
-    Periode (Nederlands):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[not(conceptID)]/term[@xml:lang="nl"]'
-      record: qe0xj0
-    Periode (Engels):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[not(conceptID)]/term[@xml:lang="en"]'
-      record: qe0xj0
-    Periode (Frans):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[not(conceptID)]/term[@xml:lang="fr"]'
-      record: qe0xj0
-    Materiaal en techniek (Nederlands):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/displayMaterialsTech[@xml:lang="nl"]'
-      record: qe0xj0
-    Materiaal en techniek (Engels):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/displayMaterialsTech[@xml:lang="en"]'
-      record: qe0xj0
-    Materiaal en techniek (Frans):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/displayMaterialsTech[@xml:lang="fr"]'
-      record: qe0xj0
-    Afmetingen label:
-      xpath: '(descriptiveMetadata/objectIdentificationWrap/objectMeasurementsWrap/objectMeasurementsSet/displayObjectMeasurements)[1]'
-      record: 9uk0e5
-    Inscripties (Nederlands):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/inscriptionsWrap/inscriptions/inscriptionDescription[not(@type)]/descriptiveNoteValue[@xml:lang="nl"]'
-      record: lx1els
-    Inscripties (Engels):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/inscriptionsWrap/inscriptions/inscriptionDescription[not(@type)]/descriptiveNoteValue[@xml:lang="en"]'
-      record: vdwcw1
-    Inscripties (Frans):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/inscriptionsWrap/inscriptions/inscriptionDescription[not(@type)]/descriptiveNoteValue[@xml:lang="fr"]'
-      record: vdwcw1
-    Standplaats (Nederlands):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/repositoryWrap/repositorySet/repositoryLocation/namePlaceSet/appellationValue[@xml:lang="nl"]'
-      record: xvrh2n
-    Standplaats (Engels):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/repositoryWrap/repositorySet/repositoryLocation/namePlaceSet/appellationValue[@xml:lang="en"]'
-      record: xvrh2n
-    Standplaats (Frans):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/repositoryWrap/repositorySet/repositoryLocation/namePlaceSet/appellationValue[@xml:lang="fr"]'
-      record: xvrh2n
-    Tekstwaarden (nota in het Nederlands):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="note"]/descriptiveNoteValue[@xml:lang="nl"]'
-      record: 7wyjiw
-    Tekstwaarden (marketingtekst/highlights in het Nederlands):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="highlights"]/descriptiveNoteValue[@xml:lang="nl"]'
-      record: vdwcw1
-    Tekstwaarden (marketingtekst/highlights in het Engels):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="highlights"]/descriptiveNoteValue[@xml:lang="en"]'
-      record: vdwcw1
-    Tekstwaarden (literatuur in het Nederlands):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="literature"]/descriptiveNoteValue[@xml:lang="nl"]'
-      record: vdwcw1
-    Tekstwaarden (technical notes in het Nederlands):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="technical-notes"]/descriptiveNoteValue[@xml:lang="nl"]'
-      record: vdwcw1
-    Rubriek (Nederlands):
+      record: 1909-OO
+    Rol vervaardiger EN:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/roleActor/term[@xml:lang="en"]'
+      record: 1909-OO
+    Rol vervaardiger externe bron:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/roleActor/conceptID[@source="AAT"]'
+      record: 1909-OO
+    Geboortedatum begin:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalDatesActor[@type="birth-date"]/earliestDate'
+      record: 1874-C
+    Geboortedatum eind:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalDatesActor[@type="birth-date"]/latestDate'
+      record: 1874-C
+    Precisie geboortedatum:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalDatesActor[@type="birth-date"]/earliestDate/@type'
+      record: 1941-O
+    Geboorteplaats NL:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalPlaceActor[@type="birth-place"]/namePlaceSet/appellationValue[@xml:lang="nl"]'
+      record: 1935-V
+    Geboorteplaats FR:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalPlaceActor[@type="birth-place"]/namePlaceSet/appellationValue[@xml:lang="fr"]'
+      record: 1935-V
+    Geboorteplaats EN:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalPlaceActor[@type="birth-place"]/namePlaceSet/appellationValue[@xml:lang="en"]'
+      record: 1935-V
+    Geboorteplaats externe bron:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalPlaceActor[@type="birth-place"]/placeID[@source="TGN"]'
+      record: 1935-V
+    Sterftedatum begin:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalDatesActor[@type="death-date"]/earliestDate'
+      record: 1874-C
+    Sterftedatum eind:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalDatesActor[@type="death-date"]/latestDate'
+      record: 1874-C
+    Precisie sterftedatum:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalDatesActor[@type="death-date"]/earliestDate/@type'
+      record: 1935-AV
+    Sterfteplaats NL:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalPlaceActor[@type="death-place"]/namePlaceSet/appellationValue[@xml:lang="nl"]'
+      record: 1935-V
+    Sterfteplaats FR:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalPlaceActor[@type="death-place"]/namePlaceSet/appellationValue[@xml:lang="fr"]'
+      record: 1935-V
+    Sterfteplaats EN:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalPlaceActor[@type="death-place"]/namePlaceSet/appellationValue[@xml:lang="en"]'
+      record: 1935-V
+    Sterfteplaats externe bron:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventActor/actorInRole/actor/vitalPlaceActor[@type="death-place"]/placeID[@source="TGN"]'
+      record: 1935-V
+    Titel NL:
+      xpath: '(descriptiveMetadata/objectIdentificationWrap/titleWrap/titleSet/appellationValue[@pref="preferred" and @xml:lang="nl"])[1]'
+      record: 1865-C
+    Titel FR:
+      xpath: '(descriptiveMetadata/objectIdentificationWrap/titleWrap/titleSet/appellationValue[@pref="preferred" and @xml:lang="fr"])[1]'
+      record: 1865-C
+    Titel EN:
+      xpath: '(descriptiveMetadata/objectIdentificationWrap/titleWrap/titleSet/appellationValue[@pref="preferred" and @xml:lang="en"])[1]'
+      record: 1865-C
+    School / stijl NL:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[@type="style"]/term[@xml:lang="nl"]'
+      record: 1998-B-121
+    School / stijl FR:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[@type="style"]/term[@xml:lang="fr"]'
+      record: 1998-B-121
+    School / stijl EN:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[@type="style"]/term[@xml:lang="en"]'
+      record: 1998-B-121
+    School / stijl externe bron:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[@type="style"]/conceptID[@source="AAT"]'
+      record: 1998-B-121
+    Datering begin:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventDate/date/earliestDate'
+      record: 1920-AN
+    Datering eind:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventDate/date/latestDate'
+      record: 1955-B
+    Precisie datering:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventDate/date/earliestDate/@type'
+      record: 1955-B
+    Periode NL:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[not(@type)]/term[@xml:lang="nl"]'
+      record: 2005-AC
+    Periode FR:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[not(@type)]/term[@xml:lang="fr"]'
+      record: 2005-AC
+    Periode EN:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[not(@type)]/term[@xml:lang="en"]'
+      record: 2005-AC
+    Beschrijving NL:
+      xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet/descriptiveNoteValue[@xml:lang="nl"]'
+      record: S-46
+    Beschrijving FR:
+      xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet/descriptiveNoteValue[@xml:lang="fr"]'
+      record: S-46
+    Beschrijving EN:
+      xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet/descriptiveNoteValue[@xml:lang="en"]'
+      record: S-46
+    Objectcategorie NL:
       xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="object-category"]/term[@pref="preferred" and @xml:lang="nl"]'
-      record: pt07rz
-    Rubriek (Engels):
-      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="object-category"]/term[@pref="preferred" and @xml:lang="en"]'
-      record: pt07rz
-    Rubriek (Frans):
+      record: 1999-AJ
+    Objectcategorie FR:
       xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="object-category"]/term[@pref="preferred" and @xml:lang="fr"]'
-      record: pt07rz
-    Verwervingsgeschiedenis:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="provenance"]/eventDescriptionSet/descriptiveNoteValue[@xml:lang="nl"]'
-      record: aqey9u
-    Thesaurus (Iconclass id):
-      xpath: 'descriptiveMetadata/objectRelationWrap/subjectWrap/subjectSet/subject/subjectConcept[conceptID[@source="Iconclass"]]/conceptID'
-      record: vifynp
-    Thesaurus (Iconclass term):
-      xpath: 'descriptiveMetadata/objectRelationWrap/subjectWrap/subjectSet/subject/subjectConcept[conceptID[@source="Iconclass"]]/term'
-      record: vifynp
-    Link naar Brocade bibliotheek:
-      xpath: 'descriptiveMetadata/objectRelationWrap/relatedWorksWrap/relatedWorkSet/relatedWork/object/objectWebResource[@label="link-library"]'
-      record: htk64h
-    Link naar Brocade archief:
-      xpath: 'descriptiveMetadata/objectRelationWrap/relatedWorksWrap/relatedWorkSet/relatedWork/object/objectWebResource[@label="link-archive"]'
-      record: htk64h
-    Copyright status / tekstwaarde + jaartal:
-      xpath: 'administrativeMetadata/rightsWorkWrap/rightsWorkSet/creditLine'
-      record: fyer9w
-    Relatie ouder > kind (object is ouder):
-      xpath: 'descriptiveMetadata/objectRelationWrap/relatedWorksWrap/relatedWorkSet[relatedWorkRelType/term[not(@pref)]="geheel"]/relatedWork/object/objectID[@type="oai"]'
-      record: skxhvh
-    Relatie kind > ouder (object is kind):
-      xpath: 'descriptiveMetadata/objectRelationWrap/relatedWorksWrap/relatedWorkSet[relatedWorkRelType/term[not(@pref)]="deel van"]/relatedWork/object/objectID[@type="oai"]'
-      record: dnhghv
-    Relaties voorzijde > achterzijde (object is voorzijde):
-      xpath: 'descriptiveMetadata/objectRelationWrap/relatedWorksWrap/relatedWorkSet[relatedWorkRelType/term[not(@pref)]="voorzijde van"]/relatedWork/object/objectID[@type="oai"]'
-      record: 9eks1s
-    Relaties achterzijde > voorzijde (object is achterzijde):
-      xpath: 'descriptiveMetadata/objectRelationWrap/relatedWorksWrap/relatedWorkSet[relatedWorkRelType/term[not(@pref)]="achterzijde van"]/relatedWork/object/objectID[@type="oai"]'
-      record: u48ubw
-    Objectnaam:
-      xpath: 'descriptiveMetadata/objectClassificationWrap/objectWorkTypeWrap/objectWorkType[@type="form" and conceptID[@source="TMS"]]/term[@pref="preferred"]'
-      record: vwb1fg
-    Paginanummer (in schetsboek):
-      xpath: 'descriptiveMetadata/objectIdentificationWrap/objectDescriptionWrap/objectDescriptionSet[@type="page-number"]/descriptiveNoteValue'
-      record: u48ubw
-    Met dank aan (Nederlands):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="restoration"]/eventDescriptionSet/descriptiveNoteValue[@xml:lang="nl"]'
-      record: 10l5gd
-    Met dank aan (Engels):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="restoration"]/eventDescriptionSet/descriptiveNoteValue[@xml:lang="en"]'
-      record: 10l5gd
-    Met dank aan (Frans):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="restoration"]/eventDescriptionSet/descriptiveNoteValue[@xml:lang="fr"]'
-      record: 10l5gd
-    Schenkers en erflaters (Nederlands):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="acquisition"]/eventDescriptionSet/descriptiveNoteValue[@xml:lang="nl"]'
-      record: vvqzxv
-    Schenkers en erflaters (Engels):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="acquisition"]/eventDescriptionSet/descriptiveNoteValue[@xml:lang="en"]'
-      record: vvqzxv
-    Schenkers en erflaters (Frans):
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="acquisition"]/eventDescriptionSet/descriptiveNoteValue[@xml:lang="fr"]'
-      record: vvqzxv
-    Highlights:
-      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[not(@type)]/term[text()="highlights"]'
-      record: 61unsj
-    Collectiepresentatie:
-      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[not(@type)]/term[text()="collection presentation"]'
-      record: 61unsj
-    Thesaurus AAT - Facet Abstracte begrippen:
-      xpath: 'descriptiveMetadata/objectRelationWrap/subjectWrap/subjectSet/subject[@type="associated-concept"]/subjectConcept[conceptID[@source="AAT"]]/term[@pref="preferred"]'
-      record: 72g30u
-    Thesaurus AAT - Facet Stijlen en perioden:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/periodName[conceptID[@source="AAT"]]/term[@pref="preferred"]'
-      record: kqdpko
-    Thesaurus AAT - Facet Actoren en Organismen:
-      xpath: 'descriptiveMetadata/objectRelationWrap/subjectWrap/subjectSet/subject[@type="agent"]/subjectConcept[conceptID[@source="AAT"]]/term[@pref="preferred"]'
-      record: ipk5f6
-    Thesaurus AAT - Facet Activiteiten:
-      xpath: 'descriptiveMetadata/objectRelationWrap/subjectWrap/subjectSet/subject[@type="activity"]/subjectConcept[conceptID[@source="AAT"]]/term[@pref="preferred"]'
-      record: vifynp
-    Thesaurus AAT - Facet Materialen:
-      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/materialsTech/termMaterialsTech[conceptID[@source="AAT"]]/term[@pref="preferred"]'
-      record: ipk5f6
-    Thesaurus AAT - Facet Objecten:
-      xpath: 'descriptiveMetadata/objectClassificationWrap/objectWorkTypeWrap/objectWorkType[conceptID[@source="AAT"]]/term[@pref="preferred"]'
-      record: vifynp
+      record: 1999-AJ
+    Objectcategorie EN:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="object-category"]/term[@pref="preferred" and @xml:lang="en"]'
+      record: 1999-AJ
+    Objectcategorie externe bron:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/classificationWrap/classification[@type="object-category"]/conceptID[@pref="preferred" and @source="AAT"]'
+      record: 1999-AJ
+    Objectnaam NL:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/objectWorkTypeWrap/objectWorkType/term[@pref="preferred" and @xml:lang="nl"]'
+      record: 1958-X-41
+    Objectnaam FR:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/objectWorkTypeWrap/objectWorkType/term[@pref="preferred" and @xml:lang="fr"]'
+      record: 1958-X-41
+    Objectnaam EN:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/objectWorkTypeWrap/objectWorkType/term[@pref="preferred" and @xml:lang="en"]'
+      record: 1958-X-41
+    Objectnaam externe bron:
+      xpath: 'descriptiveMetadata/objectClassificationWrap/objectWorkTypeWrap/objectWorkType/conceptID[@pref="preferred" and @source="AAT"]'
+      record: 1958-X-41
+    Technische beschrijving NL:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/displayMaterialsTech'
+      record: 1958-X-41
+    Techniek NL:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/materialsTech/termMaterialsTech[@type="technique"]/term[@pref="preferred" and @xml:lang="nl"]'
+      record: 1998-B-121
+    Techniek FR:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/materialsTech/termMaterialsTech[@type="technique"]/term[@pref="preferred" and @xml:lang="fr"]'
+      record: 1998-B-121
+    Techniek EN:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/materialsTech/termMaterialsTech[@type="technique"]/term[@pref="preferred" and @xml:lang="en"]'
+      record: 1998-B-121
+    Techniek externe bron:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/materialsTech/termMaterialsTech[@type="technique"]/conceptID[@pref="preferred" and @source="AAT"]'
+      record: 1998-B-121
+    Materiaal NL:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/materialsTech/termMaterialsTech[@type="material"]/term[@pref="preferred" and @xml:lang="nl"]'
+      record: 1958-X-7
+    Materiaal FR:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/materialsTech/termMaterialsTech[@type="material"]/term[@pref="preferred" and @xml:lang="fr"]'
+      record: 1958-X-7
+    Materiaal EN:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/materialsTech/termMaterialsTech[@type="material"]/term[@pref="preferred" and @xml:lang="en"]'
+      record: 1958-X-7
+    Materiaal externe bron:
+      xpath: 'descriptiveMetadata/eventWrap/eventSet/event[eventType/term="production"]/eventMaterialsTech/materialsTech/termMaterialsTech[@type="material"]/conceptID[@pref="preferred" and @source="AAT"]'
+      record: 1958-X-7
+
+
+
+
+
+  # Certificate Authority (also known as 'cacert') may not work on its own depending on your system and PHP configuration,
+  # that's why a cacert.pem is included in this project (from https://curl.haxx.se/docs/caextract.html).
+  # Set override_certificate_authority to 'true' when we need to specify our own cacert.pem (can be a relative path or an absolute system path).
+  override_certificate_authority: true
+  ssl_certificate_authority_file: 'cacert.pem'
